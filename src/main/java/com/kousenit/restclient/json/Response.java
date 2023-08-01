@@ -1,4 +1,4 @@
-package com.oreilly.restclient.json;
+package com.kousenit.restclient.json;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

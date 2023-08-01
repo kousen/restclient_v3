@@ -1,6 +1,6 @@
-package com.oreilly.restclient.services;
+package com.kousenit.restclient.services;
 
-import com.oreilly.restclient.json.AstroResponse;
+import com.kousenit.restclient.json.AstroResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;

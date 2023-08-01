@@ -1,6 +1,6 @@
-package com.oreilly.restclient.services;
+package com.kousenit.restclient.services;
 
-import com.oreilly.restclient.json.AstroResponse;
+import com.kousenit.restclient.json.AstroResponse;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

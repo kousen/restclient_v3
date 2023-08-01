@@ -1,6 +1,6 @@
-package com.oreilly.restclient.services;
+package com.kousenit.restclient.services;
 
-import com.oreilly.restclient.entities.Site;
+import com.kousenit.restclient.entities.Site;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

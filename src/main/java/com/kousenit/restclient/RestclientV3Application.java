@@ -1,4 +1,4 @@
-package com.oreilly.restclient;
+package com.kousenit.restclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

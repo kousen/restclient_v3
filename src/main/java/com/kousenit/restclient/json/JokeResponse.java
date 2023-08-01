@@ -1,4 +1,4 @@
-package com.oreilly.restclient.json;
+package com.kousenit.restclient.json;
 
 import java.util.List;
 

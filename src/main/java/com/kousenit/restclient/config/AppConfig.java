@@ -1,6 +1,6 @@
-package com.oreilly.restclient.config;
+package com.kousenit.restclient.config;
 
-import com.oreilly.restclient.services.JsonPlaceholderService;
+import com.kousenit.restclient.services.JsonPlaceholderService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatusCode;

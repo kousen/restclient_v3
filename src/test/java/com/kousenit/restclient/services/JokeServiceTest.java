@@ -1,4 +1,4 @@
-package com.oreilly.restclient.services;
+package com.kousenit.restclient.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

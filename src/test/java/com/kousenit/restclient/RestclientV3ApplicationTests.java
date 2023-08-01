@@ -1,4 +1,4 @@
-package com.oreilly.restclient;
+package com.kousenit.restclient;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

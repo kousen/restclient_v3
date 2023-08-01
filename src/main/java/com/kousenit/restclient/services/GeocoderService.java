@@ -1,7 +1,7 @@
-package com.oreilly.restclient.services;
+package com.kousenit.restclient.services;
 
-import com.oreilly.restclient.entities.Site;
-import com.oreilly.restclient.json.Response;
+import com.kousenit.restclient.json.Response;
+import com.kousenit.restclient.entities.Site;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 

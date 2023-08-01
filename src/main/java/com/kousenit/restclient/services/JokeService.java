@@ -1,7 +1,7 @@
-package com.oreilly.restclient.services;
+package com.kousenit.restclient.services;
 
-import com.oreilly.restclient.config.MyProperties;
-import com.oreilly.restclient.json.JokeResponse;
+import com.kousenit.restclient.config.MyProperties;
+import com.kousenit.restclient.json.JokeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;

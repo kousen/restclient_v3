@@ -1,4 +1,4 @@
-package com.oreilly.restclient.json;
+package com.kousenit.restclient.json;
 
 public record BlogPost(Integer id,
                        Integer userId,

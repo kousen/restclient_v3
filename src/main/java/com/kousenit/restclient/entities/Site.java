@@ -1,4 +1,4 @@
-package com.oreilly.restclient.entities;
+package com.kousenit.restclient.entities;
 
 public class Site {
     private Integer id;
