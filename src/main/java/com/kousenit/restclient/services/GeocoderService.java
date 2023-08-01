@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,11 +28,8 @@ public class GeocoderService {
     }
 
     private static String getGoogleMapsApiKey() {
-        String apiKey = System.getenv("GOOGLE_MAPS_API_KEY");
-        if (apiKey == null) {
-            throw new RuntimeException("No API key found");
-        }
-        return apiKey;
+        return Optional.ofNullable(System.getenv("GOOGLE_MAPS_API_KEY"))
+                .orElseThrow(() -> new RuntimeException("No API key found"));
     }
 
     private String encodeString(String s) {
