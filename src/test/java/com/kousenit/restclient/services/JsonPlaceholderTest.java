@@ -2,6 +2,7 @@ package com.kousenit.restclient.services;
 
 import com.kousenit.restclient.json.BlogPost;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,14 @@ import java.util.stream.IntStream;
 public class JsonPlaceholderTest {
     @Autowired
     private WebTestClient client;
+
+    @BeforeEach
+    void setUp() {
+        client.head()
+                .uri("https://jsonplaceholder.typicode.com/posts")
+                .exchange()
+                .expectStatus().isOk();
+    }
 
     @Test
     void getPosts() {

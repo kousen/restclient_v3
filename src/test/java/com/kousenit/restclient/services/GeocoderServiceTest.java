@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -17,6 +21,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 @SpringBootTest
 class GeocoderServiceTest {
     private final Logger logger = LoggerFactory.getLogger(GeocoderServiceTest.class);
+    private final static String BASE_URL = "https://maps.googleapis.com";
 
     @Autowired
     private GeocoderService service;
@@ -25,9 +30,12 @@ class GeocoderServiceTest {
     void setUp(@Autowired RestTemplateBuilder builder) {
         RestTemplate template = builder.build();
         try {
-            template.headForHeaders("https://maps.googleapis.com");
-        } catch (Exception e) {
-            assumeTrue(false, "https://maps.googleapis.com is not available");
+            ResponseEntity<String> response = template.exchange(
+                    BASE_URL, HttpMethod.HEAD, null, String.class);
+            HttpStatusCode statusCode = response.getStatusCode();
+            assumeTrue(statusCode.is2xxSuccessful() || statusCode.is3xxRedirection());
+        } catch (RestClientException e) {
+            assumeTrue(false, "%s is not available".formatted(BASE_URL));
         }
     }
 

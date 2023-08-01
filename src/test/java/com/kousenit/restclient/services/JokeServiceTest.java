@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -36,7 +37,7 @@ public class JokeServiceTest {
         } catch (IOException | InterruptedException e) {
             assumeTrue(false, "Chuck Norris API is not available");
         }
-        assumeTrue(response.statusCode() == 200);
+        assumeTrue(response.statusCode() == HttpURLConnection.HTTP_OK);
     }
 
     @Test

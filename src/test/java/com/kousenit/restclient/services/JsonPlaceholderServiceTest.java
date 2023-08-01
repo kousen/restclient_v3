@@ -1,10 +1,12 @@
 package com.kousenit.restclient.services;
 
 import com.kousenit.restclient.json.BlogPost;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.stream.IntStream;
@@ -16,6 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class JsonPlaceholderServiceTest {
     @Autowired
     private JsonPlaceholderService service;
+
+    @BeforeEach
+    void setUp() {
+        WebTestClient client = WebTestClient.bindToServer()
+                .baseUrl("https://jsonplaceholder.typicode.com")
+                .build();
+        client.head()
+                .exchange()
+                .expectStatus().isOk();
+    }
 
     @Test
     void getAllPosts() {

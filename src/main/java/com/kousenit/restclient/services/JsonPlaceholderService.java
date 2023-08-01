@@ -12,6 +12,13 @@ import java.util.Optional;
 @HttpExchange("/posts")
 public interface JsonPlaceholderService {
 
+    // Supposedly, returning ResponseEntity<Void> tells Spring
+    // to do a HEAD request, but that doesn't seem to work.
+    // Still seeing a GET request in the logs, along with headers
+    // (but at least there's no body).
+    @GetExchange()
+    ResponseEntity<Void> headRequest();
+
     @GetExchange()
     List<BlogPost> getPosts();
 
