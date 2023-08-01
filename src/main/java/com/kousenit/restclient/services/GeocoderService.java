@@ -13,12 +13,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class GeocoderService {
-    private static final String KEY = "AIzaSyDz89mFBP4a-N8jE7uFQEd1J8y7d-_ksH4";
 
     private final WebClient client;
 
+    private static final String KEY;
+
+    static {
+        KEY = GeocoderService.getGoogleMapsApiKey();
+    }
+
     public GeocoderService() {
-        client = WebClient.create("https://maps.googleapis.com");
+        this.client = WebClient.create("https://maps.googleapis.com");
+    }
+
+    private static String getGoogleMapsApiKey() {
+        String apiKey = System.getenv("GOOGLE_MAPS_API_KEY");
+        if (apiKey == null) {
+            throw new RuntimeException("No API key found");
+        }
+        return apiKey;
     }
 
     private String encodeString(String s) {
