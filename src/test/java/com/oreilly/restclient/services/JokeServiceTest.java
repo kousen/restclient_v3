@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -23,13 +24,18 @@ public class JokeServiceTest {
     private JokeService service;
 
     @BeforeEach
-    void setUp() throws Exception {
-        HttpResponse<Void> response = HttpClient.newHttpClient()
-                .send(HttpRequest.newBuilder()
-                        .uri(URI.create("https://api.chucknorris.io"))
-                        .method("HEAD", HttpRequest.BodyPublishers.noBody())
-                        .build(),
-                        HttpResponse.BodyHandlers.discarding());
+    void setUp() {
+        HttpResponse<Void> response = null;
+        try {
+            response = HttpClient.newHttpClient()
+                    .send(HttpRequest.newBuilder()
+                            .uri(URI.create("https://api.chucknorris.io"))
+                            .method("HEAD", HttpRequest.BodyPublishers.noBody())
+                            .build(),
+                            HttpResponse.BodyHandlers.discarding());
+        } catch (IOException | InterruptedException e) {
+            assumeTrue(false, "Chuck Norris API is not available");
+        }
         assumeTrue(response.statusCode() == 200);
     }
 
