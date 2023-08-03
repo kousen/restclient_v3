@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest
 class JsonPlaceholderServiceTest {
@@ -24,9 +26,13 @@ class JsonPlaceholderServiceTest {
         WebTestClient client = WebTestClient.bindToServer()
                 .baseUrl("https://jsonplaceholder.typicode.com")
                 .build();
-        client.head()
-                .exchange()
-                .expectStatus().isOk();
+        try {
+            client.head()
+                    .exchange()
+                    .expectStatus().isOk();
+        } catch (WebClientRequestException e) {
+            assumeTrue(false, "JSON Placeholder not available");
+        }
     }
 
     @Test
