@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -23,16 +23,21 @@ class JsonPlaceholderServiceTest {
 
     @BeforeEach
     void setUp() {
-        WebTestClient client = WebTestClient.bindToServer()
-                .baseUrl("https://jsonplaceholder.typicode.com")
-                .build();
         try {
-            client.head()
-                    .exchange()
-                    .expectStatus().isOk();
+            service.headRequest();
         } catch (WebClientRequestException e) {
             assumeTrue(false, "JSON Placeholder not available");
         }
+    }
+
+    @Test
+    void headRequest() {
+        ResponseEntity<Void> entity = service.headRequest();
+        assertAll(
+                () -> assertNotNull(entity),
+                () -> assertEquals(HttpStatus.OK, entity.getStatusCode()),
+                () -> assertFalse(entity.hasBody())
+        );
     }
 
     @Test
@@ -59,8 +64,6 @@ class JsonPlaceholderServiceTest {
                 assertThrows(WebClientResponseException.class,
                         () -> service.getPost(101));
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
-        exception.getHeaders()
-                .forEach((k, v) -> System.out.println(k + ": " + v));
         assertThat(exception.getStatusText()).contains("Conduct Unbecoming");
         System.out.println(exception.getStatusText());
     }

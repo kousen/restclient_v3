@@ -27,13 +27,13 @@ public class JokeServiceTest {
     @BeforeEach
     void setUp() {
         HttpResponse<Void> response = null;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.chucknorris.io"))
+                .method("HEAD", HttpRequest.BodyPublishers.noBody())
+                .build();
         try {
             response = HttpClient.newHttpClient()
-                    .send(HttpRequest.newBuilder()
-                            .uri(URI.create("https://api.chucknorris.io"))
-                            .method("HEAD", HttpRequest.BodyPublishers.noBody())
-                            .build(),
-                            HttpResponse.BodyHandlers.discarding());
+                    .send(request, HttpResponse.BodyHandlers.discarding());
         } catch (IOException | InterruptedException e) {
             assumeTrue(false, "Chuck Norris API is not available");
         }

@@ -31,6 +31,14 @@ public class JsonPlaceholderTest {
     }
 
     @Test
+    void headRequest() {
+        client.head()
+                .uri("https://jsonplaceholder.typicode.com/posts")
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
     void getPosts() {
         client.get()
                 .uri("https://jsonplaceholder.typicode.com/posts")

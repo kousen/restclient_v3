@@ -14,6 +14,5 @@ public class MyProperties {
 
     public void setJokeUrl(String jokeUrl) {
         this.jokeUrl = jokeUrl;
-        System.out.println("baseurl: " + jokeUrl);
     }
 }
