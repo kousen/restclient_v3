@@ -1,34 +1,22 @@
 package com.kousenit.restclient.services;
 
 import com.kousenit.restclient.json.BlogPost;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest
 class JsonPlaceholderServiceTest {
     @Autowired
     private JsonPlaceholderService service;
-
-    @BeforeEach
-    void setUp() {
-        try {
-            service.headRequest();
-        } catch (WebClientRequestException e) {
-            assumeTrue(false, "JSON Placeholder not available");
-        }
-    }
 
     @Test
     void headRequest() {

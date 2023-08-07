@@ -2,33 +2,17 @@ package com.kousenit.restclient.services;
 
 import com.kousenit.restclient.json.BlogPost;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.client.WebClientRequestException;
 
 import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class JsonPlaceholderTest {
     @Autowired
     private WebTestClient client;
-
-    @BeforeEach
-    void setUp() {
-        try {
-            client.head()
-                    .uri("https://jsonplaceholder.typicode.com/posts")
-                    .exchange()
-                    .expectStatus().isOk();
-        } catch (WebClientRequestException e) {
-            assumeTrue(false, "JSON Placeholder not available");
-        }
-    }
 
     @Test
     void headRequest() {

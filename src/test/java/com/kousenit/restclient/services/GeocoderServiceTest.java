@@ -1,42 +1,20 @@
 package com.kousenit.restclient.services;
 
 import com.kousenit.restclient.entities.Site;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest
 class GeocoderServiceTest {
     private final Logger logger = LoggerFactory.getLogger(GeocoderServiceTest.class);
-    private final static String BASE_URL = "https://maps.googleapis.com";
 
     @Autowired
     private GeocoderService service;
-
-    @BeforeEach
-    void setUp(@Autowired RestTemplateBuilder builder) {
-        RestTemplate template = builder.build();
-        try {
-            HttpHeaders headers = template.headForHeaders(BASE_URL);
-            System.out.println(headers);
-            // For simplicity, just check the headers are not empty
-            // Headers do NOT include a response status code, so consider
-            // using a ResponseEntity instead
-            assumeTrue(!headers.isEmpty(), "%s headers are not valid".formatted(BASE_URL));
-        } catch (RestClientException e) {
-            assumeTrue(false, "%s is not available".formatted(BASE_URL));
-        }
-    }
 
     @Test
     public void getLatLngWithoutStreet() {
