@@ -7,8 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class AstroServiceTest {
@@ -21,26 +20,32 @@ public class AstroServiceTest {
     public void getAstroResponse() {
         AstroResponse response = service.getAstroResponse();
         logger.info(response.toString());
-        assertTrue(response.number() >= 0);
-        assertEquals("success", response.message());
-        assertEquals(response.number(), response.people().size());
+        assertAll(
+                () -> assertTrue(response.number() >= 0),
+                () -> assertEquals("success", response.message()),
+                () -> assertEquals(response.number(), response.people().size())
+        );
     }
 
     @Test
     public void getAstroResponseRT() {
         AstroResponse response = service.getAstroResponseRT();
         logger.info(response.toString());
-        assertTrue(response.number() >= 0);
-        assertEquals("success", response.message());
-        assertEquals(response.number(), response.people().size());
+        assertAll(
+                () -> assertTrue(response.number() >= 0),
+                () -> assertEquals("success", response.message()),
+                () -> assertEquals(response.number(), response.people().size())
+        );
     }
 
     @Test
     void getAstroResponseRC() {
         AstroResponse response = service.getAstroResponseRC();
         logger.info(response.toString());
-        assertTrue(response.number() >= 0);
-        assertEquals("success", response.message());
-        assertEquals(response.number(), response.people().size());
+        assertAll(
+                () -> assertTrue(response.number() >= 0),
+                () -> assertEquals("success", response.message()),
+                () -> assertEquals(response.number(), response.people().size())
+        );
     }
 }

@@ -13,27 +13,25 @@ import java.time.Duration;
 
 @Service
 public class AstroService {
-    private final WebClient client;
-    private final RestTemplate template;
+    private final WebClient webClient;
+    private final RestTemplate restTemplate;
     private final RestClient restClient;
     private final String baseUrl = "http://api.open-notify.org";
 
     @Autowired
     public AstroService(RestTemplateBuilder restTemplateBuilder) {
-        client = WebClient.create(baseUrl);
-        template = restTemplateBuilder.build();
-        restClient = RestClient.builder()
-                .baseUrl(baseUrl)
-                .build();
+        webClient = WebClient.create(baseUrl);
+        restClient = RestClient.create(baseUrl);
+        restTemplate = restTemplateBuilder.build();
     }
 
     public AstroResponse getAstroResponseRT() {
         String url = baseUrl + "/astros.json";
-        return template.getForObject(url, AstroResponse.class);
+        return restTemplate.getForObject(url, AstroResponse.class);
     }
 
     public AstroResponse getAstroResponse() {
-        return client.get()
+        return webClient.get()
                 .uri("/astros.json")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
