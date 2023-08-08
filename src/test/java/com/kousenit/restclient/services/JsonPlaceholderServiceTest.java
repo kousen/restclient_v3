@@ -23,11 +23,14 @@ class JsonPlaceholderServiceTest {
 
     @BeforeEach
     void setUp() {
+        ResponseEntity<Void> entity = null;
         try {
-            service.headRequest();
+            entity = service.headRequest();
         } catch (WebClientRequestException e) {
             assumeTrue(false, "JSON Placeholder not available");
         }
+        assumeTrue(entity != null);
+        assumeTrue(entity.getStatusCode().is2xxSuccessful());
     }
 
     @Test
