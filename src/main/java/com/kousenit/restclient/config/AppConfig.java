@@ -47,8 +47,8 @@ public class AppConfig {
                                                 Charset.defaultCharset()))))
                 .build();
 
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder(
-                WebClientAdapter.forClient(client)).build();
+        WebClientAdapter adapter = WebClientAdapter.forClient(client);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder(adapter).build();
         return factory.createClient(JsonPlaceholderService.class);
     }
 }

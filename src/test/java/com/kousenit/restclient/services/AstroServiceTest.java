@@ -15,8 +15,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest
@@ -46,17 +45,32 @@ public class AstroServiceTest {
     public void getAstroResponse() {
         AstroResponse response = service.getAstroResponse();
         logger.info(response.toString());
-        assertTrue(response.number() >= 0);
-        assertEquals("success", response.message());
-        assertEquals(response.number(), response.people().size());
+        assertAll(
+                () -> assertTrue(response.number() >= 0),
+                () -> assertEquals("success", response.message()),
+                () -> assertEquals(response.number(), response.people().size())
+        );
     }
 
     @Test
     public void getAstroResponseRT() {
         AstroResponse response = service.getAstroResponseRT();
         logger.info(response.toString());
-        assertTrue(response.number() >= 0);
-        assertEquals("success", response.message());
-        assertEquals(response.number(), response.people().size());
+        assertAll(
+                () -> assertTrue(response.number() >= 0),
+                () -> assertEquals("success", response.message()),
+                () -> assertEquals(response.number(), response.people().size())
+        );
+    }
+
+    @Test
+    void getAstroResponseRC() {
+        AstroResponse response = service.getAstroResponseRC();
+        logger.info(response.toString());
+        assertAll(
+                () -> assertTrue(response.number() >= 0),
+                () -> assertEquals("success", response.message()),
+                () -> assertEquals(response.number(), response.people().size())
+        );
     }
 }

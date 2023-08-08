@@ -13,11 +13,21 @@ java {
 
 repositories {
     mavenCentral()
+    if (version.contains('-')) {
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    if (version.endsWith('-SNAPSHOT')) {
+        maven { url "https://repo.spring.io/snapshot" }
+    }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // RestClient
+    implementation 'org.springframework:spring-web:6.1.0-M2'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
