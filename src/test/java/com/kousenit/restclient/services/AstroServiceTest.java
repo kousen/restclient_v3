@@ -34,4 +34,13 @@ public class AstroServiceTest {
         assertEquals("success", response.message());
         assertEquals(response.number(), response.people().size());
     }
+
+    @Test
+    void getAstroResponseRC() {
+        AstroResponse response = service.getAstroResponseRC();
+        logger.info(response.toString());
+        assertTrue(response.number() >= 0);
+        assertEquals("success", response.message());
+        assertEquals(response.number(), response.people().size());
+    }
 }
