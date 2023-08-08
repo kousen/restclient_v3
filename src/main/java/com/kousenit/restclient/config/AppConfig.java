@@ -28,6 +28,7 @@ public class AppConfig {
         return NumberFormat.getCurrencyInstance(new Locale("hin", "IN"));
     }
 
+    @SuppressWarnings("removal")
     @Bean
     public JsonPlaceholderService jsonPlaceholderService() {
         // Easy way (no error handling)
