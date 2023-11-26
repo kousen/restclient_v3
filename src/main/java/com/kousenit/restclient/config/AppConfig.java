@@ -49,7 +49,7 @@ public class AppConfig {
                 .build();
 
         WebClientAdapter adapter = WebClientAdapter.forClient(client);
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder(adapter).build();
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
         return factory.createClient(JsonPlaceholderService.class);
     }
 }
