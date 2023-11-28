@@ -28,7 +28,6 @@ public class AppConfig {
         return NumberFormat.getCurrencyInstance(new Locale("hin", "IN"));
     }
 
-    @SuppressWarnings("removal")
     @Bean
     public JsonPlaceholderService jsonPlaceholderService() {
         // Easy way (no error handling)
@@ -48,7 +47,7 @@ public class AppConfig {
                                                 Charset.defaultCharset()))))
                 .build();
 
-        WebClientAdapter adapter = WebClientAdapter.forClient(client);
+        WebClientAdapter adapter = WebClientAdapter.create(client);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
         return factory.createClient(JsonPlaceholderService.class);
     }
