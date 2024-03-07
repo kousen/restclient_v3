@@ -3,6 +3,8 @@ package com.kousenit.restclient.services;
 import com.kousenit.restclient.json.BlogPost;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,8 @@ class JsonPlaceholderServiceTest {
             assumeTrue(false, "JSON Placeholder not available");
         }
         assumeTrue(entity != null);
-        assumeTrue(entity.getStatusCode().is2xxSuccessful());
+        assumeTrue(entity.getStatusCode()
+                .is2xxSuccessful());
     }
 
     @Test
@@ -50,15 +53,16 @@ class JsonPlaceholderServiceTest {
         System.out.println(posts.get(0));
     }
 
-    @Test
-    void getPost_exists() {
-        IntStream.rangeClosed(1, 100)
-                .parallel()
-                .forEach(i -> {
-                    var post = service.getPost(i);
-                    assertTrue(post.isPresent());
-                    assertEquals(i, post.get().id());
-                });
+    @ParameterizedTest(name = "Get post {0}")
+    @MethodSource("getIndices")
+    void getPost_exists(int id) {
+        var post = service.getPost(id);
+        assertTrue(post.isPresent());
+        assertEquals(id, post.get().id());
+    }
+
+    static IntStream getIndices() {
+        return IntStream.rangeClosed(1, 100);
     }
 
     @Test
