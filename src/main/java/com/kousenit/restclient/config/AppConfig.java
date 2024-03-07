@@ -1,9 +1,12 @@
 package com.kousenit.restclient.config;
 
+import com.kousenit.restclient.services.AstroInterface;
 import com.kousenit.restclient.services.JsonPlaceholderService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
@@ -26,6 +29,14 @@ public class AppConfig {
     // @Scope("prototype")
     public NumberFormat indiaNumberFormat() {
         return NumberFormat.getCurrencyInstance(new Locale("hin", "IN"));
+    }
+
+    @Bean
+    public AstroInterface astroInterface() {
+        RestClient client = RestClient.create("http://api.open-notify.org");
+        RestClientAdapter adapter = RestClientAdapter.create(client);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return factory.createClient(AstroInterface.class);
     }
 
     @Bean
