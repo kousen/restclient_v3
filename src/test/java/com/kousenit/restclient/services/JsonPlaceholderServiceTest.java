@@ -32,8 +32,7 @@ class JsonPlaceholderServiceTest {
             assumeTrue(false, "JSON Placeholder not available");
         }
         assumeTrue(entity != null);
-        assumeTrue(entity.getStatusCode()
-                .is2xxSuccessful());
+        assumeTrue(entity.getStatusCode().is2xxSuccessful());
     }
 
     @Test
