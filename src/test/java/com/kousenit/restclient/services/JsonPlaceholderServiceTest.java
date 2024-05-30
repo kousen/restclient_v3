@@ -3,6 +3,7 @@ package com.kousenit.restclient.services;
 import com.kousenit.restclient.json.BlogPost;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+@ExtendWith(TotalTimeExtension.class)
 @SpringBootTest
 class JsonPlaceholderServiceTest {
     @Autowired
@@ -52,6 +54,7 @@ class JsonPlaceholderServiceTest {
         System.out.println(posts.get(0));
     }
 
+    //@Execution(ExecutionMode.CONCURRENT)
     @ParameterizedTest(name = "Get post {0}")
     @MethodSource("getIndices")
     void getPost_exists(int id) {
