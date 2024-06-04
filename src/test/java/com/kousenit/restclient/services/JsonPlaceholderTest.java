@@ -2,8 +2,9 @@ package com.kousenit.restclient.services;
 
 import com.kousenit.restclient.json.BlogPost;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -14,11 +15,15 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JsonPlaceholderTest {
     @Autowired
     private WebTestClient client;
 
-    @BeforeEach
+    // Should be able to autowire in the WebTestClient bean
+    // inside a @BeforeAll method if the test instance lifecycle
+    // is PER_CLASS
+    @BeforeAll
     void setUp() {
         try {
             client.head()
@@ -35,7 +40,7 @@ public class JsonPlaceholderTest {
         client.head()
                 .uri("https://jsonplaceholder.typicode.com/posts")
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().is2xxSuccessful();
     }
 
     @Test

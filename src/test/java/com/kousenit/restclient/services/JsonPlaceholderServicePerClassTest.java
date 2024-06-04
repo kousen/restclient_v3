@@ -1,18 +1,25 @@
 package com.kousenit.restclient.services;
 
 import com.kousenit.restclient.json.BlogPost;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,20 +28,24 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @ExtendWith(TotalTimeExtension.class)
 @SpringBootTest
-class JsonPlaceholderServiceTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class JsonPlaceholderServicePerClassTest {
     @Autowired
     private JsonPlaceholderService service;
 
-    @BeforeEach
-    void setUp() {
-        ResponseEntity<Void> entity = null;
-        try {
-            entity = service.headRequest();
-        } catch (WebClientRequestException e) {
-            assumeTrue(false, "JSON Placeholder not available");
+    @BeforeAll
+    static void isJsonPlaceholderAvailable() {
+        HttpResponse<Void> response;
+        try (HttpClient client = HttpClient.newHttpClient()) {
+            HttpRequest req = HttpRequest.newBuilder()
+                    .uri(URI.create("https://jsonplaceholder.typicode.com"))
+                    .HEAD()
+                    .build();
+            response = client.send(req, HttpResponse.BodyHandlers.discarding());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        assumeTrue(entity != null);
-        assumeTrue(entity.getStatusCode().is2xxSuccessful());
+        assumeTrue(response != null && response.statusCode() == 200);
     }
 
     @Test
@@ -51,10 +62,9 @@ class JsonPlaceholderServiceTest {
     void getAllPosts() {
         var posts = service.getPosts();
         assertEquals(100, posts.size());
-        System.out.println(posts.get(0));
     }
 
-    //@Execution(ExecutionMode.CONCURRENT)
+    @Execution(ExecutionMode.CONCURRENT)
     @ParameterizedTest(name = "Get post {0}")
     @MethodSource("getIndices")
     void getPost_exists(int id) {
@@ -74,7 +84,6 @@ class JsonPlaceholderServiceTest {
                         () -> service.getPost(101));
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertThat(exception.getStatusText()).contains("Conduct Unbecoming");
-        System.out.println(exception.getStatusText());
     }
 
     @Test
