@@ -30,11 +30,7 @@ public class Site {
 
     @Override
     public String toString() {
-        return "Site{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+        return "Site{id=%d, address='%s', latitude=%s, longitude=%s}"
+                .formatted(id, address, latitude, longitude);
     }
 }

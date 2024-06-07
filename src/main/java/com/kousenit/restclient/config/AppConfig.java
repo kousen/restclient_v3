@@ -28,7 +28,7 @@ public class AppConfig {
     @Bean
     // @Scope("prototype")
     public NumberFormat indiaNumberFormat() {
-        return NumberFormat.getCurrencyInstance(new Locale("hin", "IN"));
+        return NumberFormat.getCurrencyInstance(Locale.of("hin", "IN"));
     }
 
     @Bean

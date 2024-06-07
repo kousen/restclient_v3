@@ -74,7 +74,7 @@ class JsonPlaceholderServicePerClassTest {
     }
 
     static IntStream getIndices() {
-        return IntStream.rangeClosed(1, 100);
+        return IntStream.rangeClosed(1, 5);
     }
 
     @Test

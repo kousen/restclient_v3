@@ -27,18 +27,17 @@ public class AstroServiceTest {
 
     @BeforeEach
     void setUp() {
-        HttpResponse<Void> response = null;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://api.open-notify.org"))
                 .method("HEAD", HttpRequest.BodyPublishers.noBody())
                 .build();
-        try {
-            response = HttpClient.newHttpClient()
-                    .send(request, HttpResponse.BodyHandlers.discarding());
+        try(HttpClient client = HttpClient.newHttpClient()) {
+            HttpResponse<Void> response =
+                    client.send(request, HttpResponse.BodyHandlers.discarding());
+            assumeTrue(response.statusCode() == HttpURLConnection.HTTP_OK);
         } catch (IOException | InterruptedException e) {
             assumeTrue(false, "Astro Service is not available");
         }
-        assumeTrue(response.statusCode() == HttpURLConnection.HTTP_OK);
     }
 
     @Test

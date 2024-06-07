@@ -51,7 +51,8 @@ class GeocoderServiceTest {
 
     @Test
     public void getLatLngWithStreet() {
-        Site site = service.getLatLng("1600 Ampitheatre Parkway",
+        Site site = service.getLatLng(
+                "1600 Ampitheatre Parkway",
                 "Mountain View", "CA");
         logger.info(site.toString());
         assertAll(
