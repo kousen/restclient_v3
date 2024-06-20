@@ -5,33 +5,39 @@ plugins {
 }
 
 group = 'com.kousenit'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 
 java {
-    sourceCompatibility = '21'
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
+boolean isMacOS = System.getProperty('os.name')?.toLowerCase()?.contains('mac')
+boolean isAarch64 = System.getProperty('os.arch')?.equalsIgnoreCase('aarch64')
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
-    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    boolean isMacOS = System.getProperty("os.name").toLowerCase().contains("mac")
-    boolean isAarch64 = System.getProperty("os.arch").equalsIgnoreCase("aarch64")
     if (isMacOS && isAarch64) {
-        implementation group: 'io.netty', name: 'netty-resolver-dns-native-macos',
-                version: '4.1.110.Final', classifier: 'osx-aarch_64'
+        implementation 'io.netty:netty-resolver-dns-native-macos:4.1.110.Final:osx-aarch_64'
     }
 }
 
 tasks.named('test', Test) {
     useJUnitPlatform()
-    jvmArgs("-XX:+EnableDynamicAgentLoading", "-Xshare:off")
+    jvmArgs('-XX:+EnableDynamicAgentLoading', '-Xshare:off')
+
+    maxParallelForks = (int) (Runtime.runtime.availableProcessors() / 2 + 1)
 }

@@ -1,6 +1,6 @@
 package com.kousenit.restclient.services;
 
-import com.kousenit.restclient.json.Response;
+import com.kousenit.restclient.json.GeocoderResponse;
 import com.kousenit.restclient.entities.Site;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -41,19 +41,19 @@ public class GeocoderService {
                 .map(this::encodeString)
                 .collect(Collectors.joining(","));
         String path = "/maps/api/geocode/json";
-        Response response = client.get()
+        GeocoderResponse geocoderResponse = client.get()
                 .uri(uriBuilder -> uriBuilder.path(path)
                         .queryParam("address", encoded)
                         .queryParam("key", KEY)
                         .build()
                 )
                 .retrieve()
-                .bodyToMono(Response.class)
+                .bodyToMono(GeocoderResponse.class)
                 .log()
                 .block(Duration.ofSeconds(2));
-        assert response != null;
-        return new Site(response.results().get(0).formattedAddress(),
-                response.results().get(0).geometry().location().lat(),
-                response.results().get(0).geometry().location().lng());
+        assert geocoderResponse != null;
+        return new Site(geocoderResponse.results().get(0).formattedAddress(),
+                geocoderResponse.results().get(0).geometry().location().lat(),
+                geocoderResponse.results().get(0).geometry().location().lng());
     }
 }

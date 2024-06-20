@@ -1,7 +1,11 @@
-package com.kousenit.restclient.services;
+package com.kousenit.restclient.services.jokes;
 
+import com.kousenit.restclient.json.JokeResponse;
+import com.kousenit.restclient.services.JokeService;
+import com.kousenit.restclient.services.TotalTimeExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest
+@ExtendWith(TotalTimeExtension.class)
 public class JokeServiceTest {
     private final Logger logger = LoggerFactory.getLogger(JokeService.class);
 
@@ -41,15 +46,10 @@ public class JokeServiceTest {
 
     @Test
     public void getJoke() {
-        String joke = service.getJoke();
-        logger.info(joke);
+        JokeResponse jokeResponse = service.getJoke();
+        logger.info(jokeResponse.toString());
+        String joke = jokeResponse.value();
         assertTrue(joke.contains("Chuck") || joke.contains("Norris"));
     }
 
-    @Test
-    public void getJokeRestTemplate() {
-        String joke = service.getJokeRT();
-        logger.info(joke);
-        assertTrue(joke.contains("Chuck") || joke.contains("Norris"));
-    }
 }

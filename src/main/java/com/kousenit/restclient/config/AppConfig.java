@@ -29,7 +29,8 @@ public class AppConfig {
     }
 
     @Bean
-    public JsonPlaceholderService jsonPlaceholderService(@Value("${jsonplaceholder.baseurl}") String baseUrl) {
+    public JsonPlaceholderService jsonPlaceholderService(
+            @Value("${jsonplaceholder.baseurl}") String baseUrl) {
         // Easy way (no error handling)
         // WebClient client = WebClient.create(baseUrl);
 

@@ -1,8 +1,10 @@
-package com.kousenit.restclient.services;
+package com.kousenit.restclient.services.jsonplaceholder;
 
 import com.kousenit.restclient.json.BlogPost;
+import com.kousenit.restclient.services.TotalTimeExtension;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@ExtendWith(TotalTimeExtension.class)
 public class JsonPlaceholderTest {
     @Autowired
     private WebTestClient client;

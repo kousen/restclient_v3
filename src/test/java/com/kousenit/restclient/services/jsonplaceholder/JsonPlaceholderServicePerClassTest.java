@@ -1,6 +1,8 @@
-package com.kousenit.restclient.services;
+package com.kousenit.restclient.services.jsonplaceholder;
 
 import com.kousenit.restclient.json.BlogPost;
+import com.kousenit.restclient.services.JsonPlaceholderService;
+import com.kousenit.restclient.services.TotalTimeExtension;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -74,7 +76,7 @@ class JsonPlaceholderServicePerClassTest {
     }
 
     static IntStream getIndices() {
-        return IntStream.rangeClosed(1, 5);
+        return IntStream.rangeClosed(1, 100);
     }
 
     @Test

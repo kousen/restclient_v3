@@ -1,8 +1,11 @@
-package com.kousenit.restclient.services;
+package com.kousenit.restclient.services.astro;
 
 import com.kousenit.restclient.json.AstroResponse;
+import com.kousenit.restclient.services.AstroService;
+import com.kousenit.restclient.services.TotalTimeExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest
+@ExtendWith(TotalTimeExtension.class)
 public class AstroServiceTest {
     private final Logger logger = LoggerFactory.getLogger(AstroService.class);
 

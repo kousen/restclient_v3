@@ -1,8 +1,11 @@
-package com.kousenit.restclient.services;
+package com.kousenit.restclient.services.geocoder;
 
 import com.kousenit.restclient.entities.Site;
+import com.kousenit.restclient.services.GeocoderService;
+import com.kousenit.restclient.services.TotalTimeExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @SpringBootTest
+@ExtendWith(TotalTimeExtension.class)
 class GeocoderServiceTest {
     private final Logger logger = LoggerFactory.getLogger(GeocoderServiceTest.class);
     private final static String BASE_URL = "https://maps.googleapis.com";

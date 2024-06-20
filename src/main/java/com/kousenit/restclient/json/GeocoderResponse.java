@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.util.List;
 
-public record Response(List<Result> results, String status) {
+public record GeocoderResponse(List<Result> results, String status) {
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     public record Result(String formattedAddress, Geometry geometry) {
