@@ -39,5 +39,5 @@ tasks.named('test', Test) {
     useJUnitPlatform()
     jvmArgs('-XX:+EnableDynamicAgentLoading', '-Xshare:off')
 
-    maxParallelForks = (int) (Runtime.runtime.availableProcessors() / 2 + 1)
+    // maxParallelForks = (int) (Runtime.runtime.availableProcessors() / 2 + 1)
 }
